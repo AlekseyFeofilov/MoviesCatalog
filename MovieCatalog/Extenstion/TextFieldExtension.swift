@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension TextField {
+extension View {
     func placeholder<Content: View>(
             when shouldShow: Bool,
             alignment: Alignment = .leading,

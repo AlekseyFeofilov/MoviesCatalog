@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomButtonStyle: ButtonStyle {
-    @State var active: Bool
+    @Binding var active: Bool
 
     func makeBody(configuration: Self.Configuration) -> some View {
         if(active){
@@ -22,7 +22,7 @@ struct CustomButtonStyle: ButtonStyle {
                     )
                     .overlay{
                         RoundedRectangle(cornerRadius: 4)
-                                .stroke(Color("GrayColor"), lineWidth: 0)
+                                .stroke(.white, lineWidth: 0)
                     }
         }
         else {
@@ -39,12 +39,12 @@ struct CustomButtonStyle: ButtonStyle {
 }
 
 struct CustomButton_Previews: PreviewProvider {
-    @State static var active: Bool = true
+    @State static var active: Bool = false
 
     static var previews: some View {
         Button(action: {}){
             Text("Button")
         }
-                .buttonStyle(CustomButtonStyle(active: active))
+                .buttonStyle(CustomButtonStyle(active: $active))
     }
 }
