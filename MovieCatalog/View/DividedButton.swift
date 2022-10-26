@@ -20,7 +20,7 @@ struct DividedButton: View {
             Spacer()
             
             Text (text)
-                .foregroundColor(activeFlag ? .white : Color.accentColor)
+                .foregroundColor(activeFlag ? .white : Color("GrayColor"))
             
             Spacer()
         }
