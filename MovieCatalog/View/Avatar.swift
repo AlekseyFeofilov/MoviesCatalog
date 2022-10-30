@@ -34,6 +34,6 @@ struct Avatar: View {
 
 struct Avatar_Previews: PreviewProvider {
     static var previews: some View {
-        Avatar(url: "1https://sun9-43.userapi.com/impf/c854220/v854220563/136392/vCakNgKV8ho.jpg?size=568x608&quality=96&sign=f4deffe9d8c70e8c617d43e8779afff5&type=album")
+        Avatar(url: "https://sun9-43.userapi.com/impf/c854220/v854220563/136392/vCakNgKV8ho.jpg?size=568x608&quality=96&sign=f4deffe9d8c70e8c617d43e8779afff5&type=album")
     }
 }
