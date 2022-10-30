@@ -21,6 +21,7 @@ struct movieCharacteristic: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
         }
+        .font(Font.custom("Montserrat-Medium", size: 12))
         .padding(.horizontal)
     }
 }
