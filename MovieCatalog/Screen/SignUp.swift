@@ -18,13 +18,8 @@ struct SignUp: View {
 
     var body: some View {
         VStack{
-            HStack{
-                Text("Регистрицая")
-                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 13, trailing: 16))
-                    .foregroundColor(Color.accentColor)
-                    .font(Font.custom("IBM Plex Sans", size: 24))
-                Spacer()
-            }
+            Title("Регистрация")
+            .padding(EdgeInsets(top: 0, leading: 16, bottom: 13, trailing: 16))
             
             CustomTextField(placeholder: "Логин", text: $login)
                 .padding(EdgeInsets(top: 0, leading: 16, bottom: 13, trailing: 16))
