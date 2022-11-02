@@ -17,12 +17,11 @@ struct movieCharacteristic: View {
                 .frame(width: 100, alignment: .leading)
                 .foregroundColor(.gray)
             Text(characteristicValue)
-                .foregroundColor(.black)
+                .foregroundColor(.white)
                 .frame(maxWidth: .infinity, alignment: .leading)
             Spacer()
         }
         .font(Font.custom("Montserrat-Medium", size: 12))
-        .padding(.horizontal)
     }
 }
 

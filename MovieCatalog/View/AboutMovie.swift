@@ -19,7 +19,11 @@ struct AboutMovie: View {
     
     var body: some View {
         VStack{
-            Text("О фильме").frame(maxWidth: .infinity, alignment: .leading)
+            Text("О фильме")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(Font.custom("IBMPlexSans-Medium", size: 16))
+                .foregroundColor(.white)
+                .padding(.bottom)
             
             movieCharacteristic(characteristicName: "Год", characteristicValue: String(Year))
             movieCharacteristic(characteristicName: "Страна", characteristicValue: Country)

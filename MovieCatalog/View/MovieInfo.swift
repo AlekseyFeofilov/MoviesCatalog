@@ -21,8 +21,12 @@ struct MovieInfo: View {
     var body: some View {
         VStack{
             Text(description)
+                .foregroundColor(.white)
                 .font(Font.custom("IBMPlexSans-Regular", size: 14))
+                .fixedSize(horizontal: false, vertical: true)
+                
             AboutMovie(Year: Year, Country: Country, Time: Time, Slogan: Slogan, Producer: Producer, Budget: Budget, Fees: Fees, Age: Age)
+                .padding(.top)
         }
     }
 }

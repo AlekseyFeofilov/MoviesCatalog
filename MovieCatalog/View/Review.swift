@@ -17,104 +17,69 @@ struct Review: View {
     var reviewText: String
     var haveOwn: Bool
     
-    @State var showReview: Bool = false
-    
     var body: some View {
-        ZStack {
-            VStack{
-                HStack{
-                    Text("Отзывы")
-                    Spacer()
-                    
-                    if(!haveOwn){
-                        Image(systemName: "plus")
-                            .foregroundColor(Color.accentColor)
-                            .padding(.trailing, 4)
-                            .onTapGesture {
-                                showReview = true
-                            }
-                    }
-                }
+        VStack{
+            HStack{
+                Text("Отзывы")
+                Spacer()
                 
-                VStack{
-                    HStack{
-                        AsyncImage(url: URL(string: avatar)){ phase in
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                                
-                            case .success(let image):
-                                if(isAnonymous){
-                                    Image("ProfileImage")
-                                }
-                                else{
-                                    image
-                                        .resizable()
-                                        .frame(width: 40, height: 40, alignment: .center)
-                                        .clipShape(Circle())
-                                }
-                                
-                            case .failure:
-                                Image("ProfileImage")
-                                
-                            @unknown default:
-                                EmptyView()
-                            }
-                        }
-                        
-                        VStack(alignment: .leading){
-                            Text(isAnonymous ? "Анонимный пользователь" : name)
-                                .font(Font.custom("IBMPlexSans-Medium", size: 16))
-                            if(isMine){
-                                Text("мой отзыв")
-                                    .font(Font.custom("IBMPlexSans-Regular", size: 12))
-                                    .foregroundColor(.gray)
-                            }
-                        }
-                        
-                        Spacer()
-                        
-                        Ratting(ratting)
-                    }
-                    
-                    Text(reviewText)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(Font.custom("IBMPlexSans-Regular", size: 14))
-                    
-                    Spacer()
-                        .frame(height: 4)
-                    
-                    HStack{
-                        Text(createdTime)
-                            .font(Font.custom("IBMPlexSans-Regular", size: 12))
-                            .foregroundColor(.gray)
-                        Spacer()
-                        
-                        if(isMine){
-                            EditButton()
-                                .onTapGesture {
-                                    showReview = true
-                                }
-                            DeleteButton()
-                        }
-                    }
+                if(!haveOwn){
+                    Image(systemName: "plus")
+                        .foregroundColor(Color.accentColor)
+                        .padding(.trailing, 4)
                 }
-                .padding(6)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray, lineWidth: 1)
-                )
             }
             
-            if(showReview){
-                Color.black.opacity(0.2)
-                    .ignoresSafeArea()
+            VStack{
+                HStack{
+                    CustomAsyncImage(imageStringUrl: avatar, failureImage: Image("ProfileImage"))
+                        .frame(width: 40, height: 40, alignment: .center)
+                        .clipShape(Circle())
+                    
+                    VStack(alignment: .leading){
+                        Text(isAnonymous ? "Анонимный пользователь" : name)
+                            .font(Font.custom("IBMPlexSans-Medium", size: 16))
+                        if(isMine){
+                            Text("мой отзыв")
+                                .font(Font.custom("IBMPlexSans-Regular", size: 12))
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    Ratting(ratting)
+                }
                 
-                ReviewDialog()
+                Text(reviewText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(Font.custom("IBMPlexSans-Regular", size: 14))
+                
+                Spacer()
+                    .frame(height: 4)
+                
+                HStack{
+                    Text(createdTime)
+                        .font(Font.custom("IBMPlexSans-Regular", size: 12))
+                        .foregroundColor(.gray)
+                    Spacer()
+                    
+                    if(isMine){
+                        EditButton()
+                        DeleteButton()
+                    }
+                }
             }
+            .padding(6)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.gray, lineWidth: 1)
+            )
         }
+        .foregroundColor(.white)
     }
 }
+
 
 struct Review_Previews: PreviewProvider {
     static var previews: some View {
