@@ -8,51 +8,56 @@
 import SwiftUI
 
 struct AuthorizationScreen: View {
-    @State private var haveAccount: Bool = false
+    @ObservedObject var viewModel = AuthorizationScreenViewModel()
     
     var body: some View {
-            ZStack {
-                Color(backgroundColorName)
-                    .ignoresSafeArea()
+        ZStack {
+            Color(backgroundColorName)
+                .ignoresSafeArea()
+            
+            VStack{
+                Image(logoImageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: viewModel.haveAccount ? MLogoHeight : SLogoHeight)
+                    .animation(.easeOut, value: viewModel.haveAccount)
                 
-                VStack{
-                    Image(logoImageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: haveAccount ? MLogoHeight : SLogoHeight)
-                        .animation(.easeOut, value: haveAccount)
-                    
-                    Spacer()
-                        .frame(maxHeight: haveAccount ? MLogoPadding : SLogoPadding)
-                    
-                    if (haveAccount){
-                        SignInView()
-                            .transition(.opacity)
-                    }
-                    else {
-                        SignUpView()
-                            .transition(.opacity)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: {}) {
-                        Text(haveAccount ? signInText : signUpText)
-                    }
-                    .padding(EdgeInsets(top: 0, leading: MPadding, bottom: SPadding, trailing: MPadding))
-                    .buttonStyle(CustomButtonStyle(active: .constant(false)))
-                    
-
-                    Text(haveAccount ? registrationText : haveAccountText)
-                        .frame(height: SFontSize)
-                        .foregroundColor(Color.accentColor)
-                        .onTapGesture {
-                            haveAccount.toggle()
-                        }
-
+                Spacer()
+                    .frame(maxHeight: (viewModel.haveAccount ? MLogoPadding : SLogoPadding) - 30)
+                
+                Text(viewModel.signUpViewModel.signInViewModel.wrongPasswordOrLogin ? "Неверный логин или пароль" : "")
+                    .foregroundColor(.accentColor)
+                    .font(.system(size: 16))
+                    .padding(.leading)
+                    .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
+                
+                if (viewModel.haveAccount){
+                    SignInView(viewModel.signUpViewModel.signInViewModel)
+                        .transition(.opacity)
                 }
+                else {
+                    SignUpView(viewModel.signUpViewModel)
+                        .transition(.opacity)
+                }
+                
+                Spacer()
+                
+                Button(action: viewModel.authorize) {
+                    Text(viewModel.haveAccount ? signInText : signUpText)
+                }
+                .padding(EdgeInsets(top: 0, leading: MPadding, bottom: SPadding, trailing: MPadding))
+                .buttonStyle(CustomButtonStyle(active: viewModel.isActive))
+                
+                
+                Text(viewModel.haveAccount ? registrationText : haveAccountText)
+                    .frame(height: SFontSize)
+                    .foregroundColor(Color.accentColor)
+                    .onTapGesture {
+                        viewModel.haveAccount.toggle()
+                    }
             }
-            .animation(.easeOut, value: haveAccount)
+        }
+        .animation(.easeOut, value: viewModel.haveAccount)
     }
 }
 
