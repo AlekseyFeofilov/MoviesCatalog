@@ -7,24 +7,20 @@
 
 import SwiftUI
 
-struct SignUpView: View {
-    @ObservedObject var viewModel: AuthorizationScreenViewModel.SignUpViewModel
-    
-    init(_ viewModel: AuthorizationScreenViewModel.SignUpViewModel){
-        self.viewModel = viewModel
-    }
+struct SignUpView<ViewModel>: View where ViewModel: SignUpViewModel {
+    @ObservedObject var viewModel: ViewModel
 
     var body: some View {
         VStack(spacing: MPadding){
             TitleTextView(registrationText)
             
-            CustomTextField(placeholder: loginText, text: $viewModel.signInViewModel.login)
+            CustomTextField(placeholder: loginText, text: $viewModel.login)
             CustomTextField(placeholder: emailText, text: $viewModel.email)
             CustomTextField(placeholder: nameText, text: $viewModel.name)
-            CustomSecureField(placeholder: passwordText, text: $viewModel.signInViewModel.password)
+            CustomSecureField(placeholder: passwordText, text: $viewModel.password)
             CustomSecureField(placeholder: confirmPasswordText, text: $viewModel.confirmedPassword)
             
-            DatePickerFieldView(placeholder: birthdayText, text: $viewModel.birthday, savedDate: $viewModel.selectedDate)
+            DatePickerFieldView(placeholder: birthdayText, text: $viewModel.birthdayString, savedDate: $viewModel.birthdayDate)
             SexButtonView($viewModel.sex)
         }
         .padding(.horizontal, MPadding)
@@ -33,6 +29,6 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(AuthorizationScreenViewModel.SignUpViewModel())
+        SignUpView(viewModel: AuthorizationScreenViewModel())
     }
 }

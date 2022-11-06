@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-func handleResponse (_ response: AFDataResponse<Data>, params: [String : String] = [String : String](), statusCodeHandle: (Int) -> Void, resultHandle: (Data) -> Void){
+func handleResponse (_ response: AFDataResponse<Data>, params: [String : Any] = [String : String](), statusCodeHandle: (Int) -> Void, resultHandle: (Data) -> Void){
     if let request = response.request {
         print("Request:", request)
         print("\nParams: ", params)

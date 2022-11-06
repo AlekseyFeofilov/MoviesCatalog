@@ -20,7 +20,7 @@ struct DatePickerPopUpView: View {
             })
             .padding()
             .background(
-                Color.white
+                Color(backgroundColorName)
                     .cornerRadius(datePickerCornerRadius)
             )
     }

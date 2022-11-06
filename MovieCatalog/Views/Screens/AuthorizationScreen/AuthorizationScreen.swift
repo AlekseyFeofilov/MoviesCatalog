@@ -25,18 +25,18 @@ struct AuthorizationScreen: View {
                 Spacer()
                     .frame(maxHeight: (viewModel.haveAccount ? MLogoPadding : SLogoPadding) - 30)
                 
-                Text(viewModel.signUpViewModel.signInViewModel.wrongPasswordOrLogin ? "Неверный логин или пароль" : "")
+                Text(viewModel.authorizationError.description)
                     .foregroundColor(.accentColor)
                     .font(.system(size: 16))
                     .padding(.leading)
                     .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
                 
                 if (viewModel.haveAccount){
-                    SignInView(viewModel.signUpViewModel.signInViewModel)
+                    SignInView(viewModel: viewModel)
                         .transition(.opacity)
                 }
                 else {
-                    SignUpView(viewModel.signUpViewModel)
+                    SignUpView(viewModel: viewModel)
                         .transition(.opacity)
                 }
                 
@@ -46,14 +46,14 @@ struct AuthorizationScreen: View {
                     Text(viewModel.haveAccount ? signInText : signUpText)
                 }
                 .padding(EdgeInsets(top: 0, leading: MPadding, bottom: SPadding, trailing: MPadding))
-                .buttonStyle(CustomButtonStyle(active: viewModel.isActive))
+                .buttonStyle(CustomButtonStyle(active: viewModel.isButtonActive))
                 
                 
                 Text(viewModel.haveAccount ? registrationText : haveAccountText)
                     .frame(height: SFontSize)
                     .foregroundColor(Color.accentColor)
                     .onTapGesture {
-                        viewModel.haveAccount.toggle()
+                        viewModel.changeAuthorizationWay()
                     }
             }
         }
