@@ -8,18 +8,24 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @ObservedObject var viewModel = SignUpModelView()
+    @ObservedObject var viewModel: AuthorizationScreenViewModel.SignUpViewModel
+    
+    init(_ viewModel: AuthorizationScreenViewModel.SignUpViewModel){
+        self.viewModel = viewModel
+    }
 
     var body: some View {
         VStack(spacing: MPadding){
             TitleTextView(registrationText)
-            CustomTextField(placeholder: loginText, text: $viewModel.login)
+            
+            CustomTextField(placeholder: loginText, text: $viewModel.signInViewModel.login)
             CustomTextField(placeholder: emailText, text: $viewModel.email)
             CustomTextField(placeholder: nameText, text: $viewModel.name)
-            CustomSecureField(placeholder: passwordText, text: $viewModel.password)
+            CustomSecureField(placeholder: passwordText, text: $viewModel.signInViewModel.password)
             CustomSecureField(placeholder: confirmPasswordText, text: $viewModel.confirmedPassword)
-//            DatePickerFieldView(placeholder: birthdayText, text: $birthday)
-            SegmentedButtonView(maleText, leftValue: "М", femaleText, rightValue: "Ж")
+            
+            DatePickerFieldView(placeholder: birthdayText, text: $viewModel.birthday, savedDate: $viewModel.selectedDate)
+            SexButtonView($viewModel.sex)
         }
         .padding(.horizontal, MPadding)
     }
@@ -27,6 +33,6 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        SignUpView(AuthorizationScreenViewModel.SignUpViewModel())
     }
 }

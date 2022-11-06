@@ -9,7 +9,11 @@
 import SwiftUI
 
 struct SignInView: View {
-    @ObservedObject var viewModel = SignInViewModel()
+    @ObservedObject var viewModel: AuthorizationScreenViewModel.SignUpViewModel.SignInViewModel
+    
+    init(_ viewModel: AuthorizationScreenViewModel.SignUpViewModel.SignInViewModel){
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(spacing: MPadding) {
@@ -22,6 +26,6 @@ struct SignInView: View {
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView()
+        SignInView(AuthorizationScreenViewModel.SignUpViewModel.SignInViewModel())
     }
 }
