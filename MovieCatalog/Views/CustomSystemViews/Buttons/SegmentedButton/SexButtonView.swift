@@ -24,6 +24,7 @@ struct SexButtonView: View {
                 action: {
                     isLeftSelected.toggle()
                     isRightSelected = false
+                    value = .male
                 },
                 activeFlag: $isLeftSelected
             )
@@ -34,6 +35,7 @@ struct SexButtonView: View {
                 action: {
                     isRightSelected.toggle()
                     isLeftSelected = false
+                    value = .female
                 },
                 activeFlag: $isRightSelected
             )
