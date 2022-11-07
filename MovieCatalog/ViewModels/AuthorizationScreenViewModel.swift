@@ -57,7 +57,11 @@ protocol SignUpViewModel: ObservableObject{
     var sex: Gender? { get set }
 }
 
-class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInViewModel{
+protocol GeneralScreenViewModel: ObservableObject{
+    var isAuthorized: Bool { get set }
+}
+
+class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInViewModel, GeneralScreenViewModel{
     @Published var login: String = ""
     @Published var password: String = ""
     
@@ -70,11 +74,16 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
     
     @Published var haveAccount: Bool = true
     @Published var authorizationError = AuthorizationError.none
+    @Published var isAuthorized: Bool = false
     
     var isButtonActive: Binding<Bool> { Binding (
         get: { self.haveAccount ? self.signInValidate() : self.simpleSignUpValidate() },
         set: { _ in }
     )}
+    
+    init(){
+        if let _ = getToken() { isAuthorized = true }
+    }
     
     private var wrongPasswordOrLogin = false
     
@@ -144,9 +153,13 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
             method: .post,
             parameters: parameters,
             encoding: JSONEncoding.default
-        ).responseData { response in
+        ).responseData { [self] response in
             handleResponse(response, params: parameters) { statusCode in
                 statusCodeHandle(statusCode)
+                
+                if (statusCode == 200){
+                    isAuthorized = true
+                }
             } resultHandle: { data in
                 let result = try? JSONDecoder().decode(Token.self, from: data)
                 guard let result = result else { return }
