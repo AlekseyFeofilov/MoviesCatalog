@@ -45,7 +45,7 @@ struct DatePickerFieldView: View {
             ZStack(alignment: .trailing) {
                 Text(fullStringText).foregroundColor(.black.opacity(0))
                 Image(calendarIconName)
-                    .padding(.trailing, SPadding)
+                    .padding(.trailing, smallPadding)
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
         }

@@ -20,13 +20,13 @@ struct DividedButtonView: View {
                 .frame(maxWidth: .infinity, maxHeight: fieldHeight)
         }
         .background(){
-            HalfRoundedRectangleShape(cornerRadius: MCornerRadius, roundedSide: side)
+            HalfRoundedRectangleShape(cornerRadius: mediumCornerRadius, roundedSide: side)
                 .fill(activeFlag ? Color.accentColor : Color.white.opacity(0))
                 .frame(height: fieldHeight)
         }
         .overlay{
-            HalfRoundedRectangleShape(cornerRadius: MCornerRadius, roundedSide: side)
-                .stroke(Color.gray, lineWidth: MFieldStrokeLineWidth)
+            HalfRoundedRectangleShape(cornerRadius: mediumCornerRadius, roundedSide: side)
+                .stroke(Color.gray, lineWidth: mediumFieldStrokeLineWidth)
                 .frame(height: fieldHeight)
         }
     }

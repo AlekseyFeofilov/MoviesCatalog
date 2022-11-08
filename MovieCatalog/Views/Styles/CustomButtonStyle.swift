@@ -16,14 +16,14 @@ struct CustomButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .frame(height: fieldHeight)
             .background(
-                RoundedRectangle(cornerRadius: MCornerRadius)
+                RoundedRectangle(cornerRadius: mediumCornerRadius)
                     .fill(Color.accentColor.opacity(active ? 1 : 0))
             )
             .overlay{
-                RoundedRectangle(cornerRadius: MCornerRadius)
+                RoundedRectangle(cornerRadius: mediumCornerRadius)
                     .stroke(
                         active ? .white : Color(grayColorName),
-                        lineWidth: active ? 0 : SFieldStrokeLineWidth)
+                        lineWidth: active ? 0 : smallFieldStrokeLineWidth)
             }
     }
 }

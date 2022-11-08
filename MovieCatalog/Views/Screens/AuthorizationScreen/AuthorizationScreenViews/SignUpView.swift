@@ -11,7 +11,7 @@ struct SignUpView<ViewModel>: View where ViewModel: SignUpViewModel {
     @ObservedObject var viewModel: ViewModel
 
     var body: some View {
-        VStack(spacing: MPadding){
+        VStack(spacing: mediumPadding){
             TitleTextView(registrationText)
             
             CustomTextField(placeholder: loginText, text: $viewModel.login)
@@ -23,12 +23,12 @@ struct SignUpView<ViewModel>: View where ViewModel: SignUpViewModel {
             DatePickerFieldView(placeholder: birthdayText, text: $viewModel.birthdayString, savedDate: $viewModel.birthdayDate)
             SexButtonView($viewModel.sex)
         }
-        .padding(.horizontal, MPadding)
+        .padding(.horizontal, mediumPadding)
     }
 }
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(viewModel: AuthorizationScreenViewModel())
+        SignUpView(viewModel: AuthorizationScreenViewModel(isAthorized: .constant(false)))
     }
 }

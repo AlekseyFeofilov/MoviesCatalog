@@ -44,7 +44,7 @@ struct FavoriteStack: View {
         let scrollOrigin = outerProxy.frame(in: .global).origin.x
         let scrollWidth = outerProxy.size.width
         
-        if innerOrigin > scrollOrigin && innerOrigin < scrollOrigin + imageWidth + smallPadding && innerOrigin + imageWidth < scrollOrigin + scrollWidth {
+        if innerOrigin > scrollOrigin && innerOrigin < scrollOrigin + imageWidth + SPadding && innerOrigin + imageWidth < scrollOrigin + scrollWidth {
             return true
         }
         return false

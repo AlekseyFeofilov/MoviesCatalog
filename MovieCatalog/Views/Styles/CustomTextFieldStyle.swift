@@ -10,12 +10,12 @@ import SwiftUI
 struct CustomTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<_Label>) -> some View {
         configuration
-            .padding(.horizontal, LCornerRadius)
+            .padding(.horizontal, largeCornerRadius)
             .foregroundColor(Color(fakeAccentColorName))
             .frame(height: fieldHeight)
             .overlay{
-                RoundedRectangle(cornerRadius: LCornerRadius)
-                    .stroke(Color.gray, lineWidth: MFieldStrokeLineWidth)
+                RoundedRectangle(cornerRadius: largeCornerRadius)
+                    .stroke(Color.gray, lineWidth: mediumFieldStrokeLineWidth)
             }
     }
 }
