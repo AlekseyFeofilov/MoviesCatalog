@@ -24,7 +24,7 @@ struct MovieCatalogApp: App {
 
     var body: some Scene {
         WindowGroup {
-            GeneralScreen(viewModel: AuthorizationScreenViewModel())
+            GeneralScreen(viewModel: GeneralScreenViewModel())
         }
     }
 }

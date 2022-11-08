@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct NavigationView: View {
-    @State private var currentScreen = 0
+    @ObservedObject var viewModel: NavigationViewModelView
     
-    init(){
+    init(viewModel: NavigationViewModelView){
+        self.viewModel = viewModel
+        
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().backgroundImage = UIImage()
         UITabBar.appearance().isTranslucent = true
@@ -18,7 +20,7 @@ struct NavigationView: View {
     }
     
     var body: some View {
-        TabView (selection: $currentScreen){
+        TabView (selection: $viewModel.currentScreen){
             
             MainScreen(
                 movie: [
@@ -135,21 +137,17 @@ struct NavigationView: View {
                 ]
             )
                 .tabItem {
-                    Label(mainText, image: currentScreen == 0 ? navActiveMainImageName : navMainImageName)
+                    Label(mainText, image: viewModel.currentScreen == 0 ? navActiveMainImageName : navMainImageName)
                 }
                 .tag(0)
             
-                AuthorizationScreen(viewModel: AuthorizationScreenViewModel())
+            ProfileScreen(viewModel: ProfileScreenViewModel(isAuthorized: $viewModel.isAuthorized))
                 .tabItem {
-                    Label(profileText, image: currentScreen == 1 ? NavActiveProfileImageName : NavProfileImageName)
+                    Label(profileText, image: viewModel.currentScreen == 1 ? navActiveProfileImageName : navProfileImageName)
                 }
                 .tag(1)
         }
         .onAppear{
-//            // correct the transparency bug for Tab bars
-//            let tabBarAppearance = UITabBarAppearance()
-//            tabBarAppearance.configureWithOpaqueBackground()
-//            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
             let tabBarAppearance: UITabBarAppearance = UITabBarAppearance()
             tabBarAppearance.configureWithDefaultBackground()
             tabBarAppearance.backgroundColor = UIColor(Color(tabBarColorName))
@@ -164,6 +162,6 @@ struct NavigationView: View {
 
 struct NavigationView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView()
+        NavigationView(viewModel: NavigationViewModelView(isAuthorized: .constant(false)))
     }
 }
