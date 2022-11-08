@@ -18,7 +18,7 @@ struct TitleTextView: View {
         HStack{
             Text(text)
                 .foregroundColor(Color.accentColor)
-                .font(Font.custom(IBMPlexSansRegularName, size: MFontSize))
+                .font(Font.custom(IBMPlexSansRegularName, size: mediumFontSize))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }

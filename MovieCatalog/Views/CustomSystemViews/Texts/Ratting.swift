@@ -19,7 +19,7 @@ struct Ratting: View {
             .frame(width: rattingWidth, height: rattingHeight)
             .foregroundColor(.white)
             .background(
-                RoundedRectangle(cornerRadius: XLCornerRadius)
+                RoundedRectangle(cornerRadius: xLargeCornerRadius)
                     .fill(Color(
                         hue: Double(greenHue * ratting) / (fullCircleDegree * rattingMaxValue),
                         saturation: 1,

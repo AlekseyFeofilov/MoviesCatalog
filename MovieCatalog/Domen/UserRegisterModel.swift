@@ -21,6 +21,6 @@ struct UserRegisterModel {
             "name" : name,
             "email" : email,
             "birthDate" : formatDate(selectedDate ?? Date.now),
-            "gender" : sex?.value ?? 0]
+            "gender" : sex?.rawValue ?? 0]
     }
 }

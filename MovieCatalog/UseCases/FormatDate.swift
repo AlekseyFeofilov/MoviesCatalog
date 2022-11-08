@@ -7,8 +7,17 @@
 
 import Foundation
 
-func formatDate(_ date: Date) -> String{
+func formatDate(_ date: Date?) -> String?{
+    guard let date = date else { return nil }
+    return getFormatter().string(from: date)
+}
+
+func formatDate(_ date: String?) -> Date?{
+    return getFormatter().date(from: date ?? "")
+}
+
+private func getFormatter() -> DateFormatter{
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    return formatter.string(from: date)
+    return formatter
 }

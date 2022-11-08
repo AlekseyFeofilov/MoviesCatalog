@@ -20,7 +20,7 @@ struct CustomSecureField: View {
         .placeholder(when: text.isEmpty) {
             Text(placeholder)
                 .foregroundColor(.gray)
-                .padding(.leading, SPadding)
+                .padding(.leading, smallPadding)
         }
         .frame(height: fieldHeight)
     }

@@ -15,7 +15,7 @@ struct CustomAsyncImage: View {
         AsyncImage(url: URL(string: imageStringUrl)){phase in
             switch phase {
             case .empty:
-                ProgressView()
+                failureImage
                 
             case .success(let image):
                 image

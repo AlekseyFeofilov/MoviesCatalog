@@ -7,16 +7,7 @@
 
 import Foundation
 
-enum Gender {
-    case male
-    case female
-    
-    var value: Int {
-        switch self {
-        case .male:
-            return 0
-        case .female:
-            return 1
-        }
-    }
+enum Gender: Int {
+    case male = 0
+    case female = 1
 }
