@@ -18,7 +18,7 @@ enum AuthorizationError {
     case incorrectEmail
     case tooYoung
     case none
-    
+
     var description: String{
         switch self {
         case .emptyParameter:
@@ -60,18 +60,18 @@ protocol SignUpViewModel: ObservableObject{
 class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInViewModel{
     @Published var login: String = "Fil1"
     @Published var password: String = "Ff888888!"
-    
+
     @Published var confirmedPassword: String = ""
     @Published var email: String = ""
     @Published var name: String = ""
     @Published var birthdayString: String = ""
     @Published var birthdayDate: Date? = nil
     @Published var sex: Gender? = nil
-    
+
     @Published var haveAccount: Bool = true
     @Published var authorizationError = AuthorizationError.none
     @Binding var isAthorized: Bool
-    
+
     var isButtonActive: Binding<Bool> { Binding (
         get: { self.haveAccount ? self.signInValidate() : self.softSignUpValidate() },
         set: { _ in }
@@ -94,11 +94,11 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
         haveAccount.toggle()
         authorizationError = .none
     }
-    
+
     private func signUp(){
         if !self.softSignUpValidate() { return }
         if !self.signUpValidate() { return }
-    
+
         let url = demoBaseURL + registerRequestURL
         
         _authorize(
@@ -115,7 +115,7 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
         if !self.signInValidate() { return }
         
         let url = demoBaseURL + loginRequestURL
-                
+
         _authorize(
             url: url,
             parameters: LoginCredentials(login: login, password: password).dictionary
@@ -125,20 +125,20 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
             }
         }
     }
-    
+
     private func signInValidate() -> Bool {
         MovieCatalog.signInValidate(login: login, password: password)
     }
-    
+
     private func softSignUpValidate() -> Bool {
         MovieCatalog.emptyValidation(login: login, password: password, confirmedPassword: confirmedPassword, name: name, email: email, birthday: birthdayDate, sex: sex)
     }
-    
+
     private func signUpValidate() -> Bool {
         authorizationError = MovieCatalog.signUpValidate(login: login, password: password, confirmedPassword: confirmedPassword, name: name, email: email, birthday: birthdayDate, sex: sex)
         return authorizationError == .none
     }
-    
+
     private func _authorize(url: String, parameters: [String:Any], statusCodeHandle: @escaping (Int) -> Void){
         AF.request(
             url,
@@ -148,7 +148,7 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
         ).responseData { response in
             handleResponse(response, params: parameters) { statusCode in
                 statusCodeHandle(statusCode)
-                
+
                 if (statusCode == 200){
                     self.isAthorized = true
                 }
