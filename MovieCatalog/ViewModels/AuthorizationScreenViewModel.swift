@@ -57,13 +57,9 @@ protocol SignUpViewModel: ObservableObject{
     var sex: Gender? { get set }
 }
 
-protocol GeneralScreenViewModel: ObservableObject{
-    var isAuthorized: Bool { get set }
-}
-
-class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInViewModel, GeneralScreenViewModel{
-    @Published var login: String = ""
-    @Published var password: String = ""
+class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInViewModel{
+    @Published var login: String = "Fil1"
+    @Published var password: String = "Ff888888!"
     
     @Published var confirmedPassword: String = ""
     @Published var email: String = ""
@@ -74,18 +70,16 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
     
     @Published var haveAccount: Bool = true
     @Published var authorizationError = AuthorizationError.none
-    @Published var isAuthorized: Bool = false
+    @Binding var isAthorized: Bool
     
     var isButtonActive: Binding<Bool> { Binding (
-        get: { self.haveAccount ? self.signInValidate() : self.simpleSignUpValidate() },
+        get: { self.haveAccount ? self.signInValidate() : self.softSignUpValidate() },
         set: { _ in }
     )}
     
-    init(){
-        if let _ = getToken() { isAuthorized = true }
+    init(isAthorized: Binding<Bool>){
+        self._isAthorized = isAthorized
     }
-    
-    private var wrongPasswordOrLogin = false
     
     func authorize(){
         if (haveAccount) {
@@ -102,11 +96,10 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
     }
     
     private func signUp(){
-        if !self.simpleSignUpValidate() { return }
+        if !self.softSignUpValidate() { return }
         if !self.signUpValidate() { return }
-        
-        //let url = baseURL + registerRequestURL
-        let url = "https://react-midterm.kreosoft.space/api/account/register"
+    
+        let url = demoBaseURL + registerRequestURL
         
         _authorize(
             url: url,
@@ -121,15 +114,14 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
     private func signIn(){
         if !self.signInValidate() { return }
         
-        let url = baseURL + loginRequestURL
-        //var url = "https://react-midterm.kreosoft.space/api/account/login"
-        
+        let url = demoBaseURL + loginRequestURL
+                
         _authorize(
             url: url,
             parameters: LoginCredentials(login: login, password: password).dictionary
         ) { [self] statusCode in
             if statusCode == 401 {
-                wrongPasswordOrLogin = true
+                authorizationError = .wrongLoginOrPassword
             }
         }
     }
@@ -138,8 +130,8 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
         MovieCatalog.signInValidate(login: login, password: password)
     }
     
-    private func simpleSignUpValidate() -> Bool {
-        MovieCatalog.simpleSignUpValidate(login: login, password: password, confirmedPassword: confirmedPassword, name: name, email: email, birthday: birthdayDate, sex: sex)
+    private func softSignUpValidate() -> Bool {
+        MovieCatalog.emptyValidation(login: login, password: password, confirmedPassword: confirmedPassword, name: name, email: email, birthday: birthdayDate, sex: sex)
     }
     
     private func signUpValidate() -> Bool {
@@ -153,12 +145,12 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
             method: .post,
             parameters: parameters,
             encoding: JSONEncoding.default
-        ).responseData { [self] response in
+        ).responseData { response in
             handleResponse(response, params: parameters) { statusCode in
                 statusCodeHandle(statusCode)
                 
                 if (statusCode == 200){
-                    isAuthorized = true
+                    self.isAthorized = true
                 }
             } resultHandle: { data in
                 let result = try? JSONDecoder().decode(Token.self, from: data)

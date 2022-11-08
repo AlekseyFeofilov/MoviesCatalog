@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AuthorizationScreen: View {
-    @ObservedObject var viewModel = AuthorizationScreenViewModel()
+    @ObservedObject var viewModel: AuthorizationScreenViewModel
     
     var body: some View {
         ZStack {
@@ -19,17 +19,11 @@ struct AuthorizationScreen: View {
                 Image(logoImageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height: viewModel.haveAccount ? MLogoHeight : SLogoHeight)
+                    .frame(height: viewModel.haveAccount ? mediumLogoHeight : smallLogoHeight)
                     .animation(.easeOut, value: viewModel.haveAccount)
                 
                 Spacer()
-                    .frame(maxHeight: (viewModel.haveAccount ? MLogoPadding : SLogoPadding) - 30)
-                
-                Text(viewModel.authorizationError.description)
-                    .foregroundColor(.accentColor)
-                    .font(.system(size: 16))
-                    .padding(.leading)
-                    .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
+                    .frame(maxHeight: viewModel.haveAccount ? mediumLogoPadding : smallLogoPadding)
                 
                 if (viewModel.haveAccount){
                     SignInView(viewModel: viewModel)
@@ -42,15 +36,21 @@ struct AuthorizationScreen: View {
                 
                 Spacer()
                 
+                Text(viewModel.authorizationError.description)
+                    .foregroundColor(.accentColor)
+                    .font(.system(size: 16))
+                    .padding(.leading)
+                    .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
+                
                 Button(action: viewModel.authorize) {
                     Text(viewModel.haveAccount ? signInText : signUpText)
                 }
-                .padding(EdgeInsets(top: 0, leading: MPadding, bottom: SPadding, trailing: MPadding))
+                .padding(EdgeInsets(top: 0, leading: mediumPadding, bottom: smallPadding, trailing: mediumPadding))
                 .buttonStyle(CustomButtonStyle(active: viewModel.isButtonActive))
                 
                 
                 Text(viewModel.haveAccount ? registrationText : haveAccountText)
-                    .frame(height: SFontSize)
+                    .frame(height: smallFontSize)
                     .foregroundColor(Color.accentColor)
                     .onTapGesture {
                         viewModel.changeAuthorizationWay()
@@ -63,6 +63,6 @@ struct AuthorizationScreen: View {
 
 struct AuthorizationScreen_Previews: PreviewProvider {
     static var previews: some View {
-        AuthorizationScreen()
+        AuthorizationScreen(viewModel: AuthorizationScreenViewModel(isAthorized: .constant(false)))
     }
 }

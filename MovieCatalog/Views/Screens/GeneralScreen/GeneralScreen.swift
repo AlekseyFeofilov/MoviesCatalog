@@ -7,21 +7,21 @@
 
 import SwiftUI
 
-struct GeneralScreen<ViewModel>: View where ViewModel: GeneralScreenViewModel {
-    @ObservedObject var viewModel: ViewModel
+struct GeneralScreen: View {
+    @ObservedObject var viewModel = GeneralScreenViewModel()
     
     var body: some View {
         if viewModel.isAuthorized {
-            NavigationView()
+            NavigationView(viewModel: NavigationViewModelView(isAuthorized: $viewModel.isAuthorized))
         }
         else {
-            AuthorizationScreen(viewModel: viewModel as! AuthorizationScreenViewModel)
+            AuthorizationScreen(viewModel: AuthorizationScreenViewModel(isAthorized: $viewModel.isAuthorized))
         }
     }
 }
 
 struct GeneralScreen_Previews: PreviewProvider {
     static var previews: some View {
-        GeneralScreen(viewModel: AuthorizationScreenViewModel())
+        GeneralScreen()
     }
 }
