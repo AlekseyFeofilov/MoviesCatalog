@@ -26,3 +26,7 @@ func getToken() -> String? {
     
     return nil
 }
+
+func deleteToken(){
+    UserDefaults.standard.removeObject(forKey: tokenKey)
+}
