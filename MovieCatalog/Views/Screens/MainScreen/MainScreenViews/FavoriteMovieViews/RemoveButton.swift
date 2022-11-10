@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct RemoveButton: View {
+    var action: () -> Void
+    
     var body: some View {
-        Button(action: {}){
+        Button(action: action){
             Image("XmarkIcon")
                 .resizable()
                 .frame(width: 4.5, height: 4.5)
@@ -25,6 +27,6 @@ struct RemoveButton: View {
 
 struct RemoveButton_Previews: PreviewProvider {
     static var previews: some View {
-        RemoveButton()
+        RemoveButton(action: {})
     }
 }

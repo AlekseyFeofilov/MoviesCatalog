@@ -70,7 +70,7 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
 
     @Published var haveAccount: Bool = true
     @Published var authorizationError = AuthorizationError.none
-    @Binding var isAthorized: Bool
+    @Binding var isAuthorized: Bool
 
     var isButtonActive: Binding<Bool> { Binding (
         get: { self.haveAccount ? self.signInValidate() : self.softSignUpValidate() },
@@ -78,7 +78,7 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
     )}
     
     init(isAthorized: Binding<Bool>){
-        self._isAthorized = isAthorized
+        self._isAuthorized = isAthorized
     }
     
     func authorize(){
@@ -103,9 +103,9 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
         
         _authorize(
             url: url,
-            parameters: UserRegisterModel(login: login, password: password, email: email, name: name, sex: sex, selectedDate: birthdayDate).dictionary
+            parameters: UserRegisterModel(login: login, password: password, email: email, name: name, sex: sex, selectedDate: birthdayDate).toDictionary()
         ) { [self] statusCode in
-            if statusCode == 400 {
+            if statusCode == badRequestCode {
                 authorizationError = .takenName
             }
         }
@@ -118,9 +118,9 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
 
         _authorize(
             url: url,
-            parameters: LoginCredentials(login: login, password: password).dictionary
+            parameters: LoginCredentials(login: login, password: password).toDictionary()
         ) { [self] statusCode in
-            if statusCode == 401 {
+            if statusCode == unauthorizedCode {
                 authorizationError = .wrongLoginOrPassword
             }
         }
@@ -146,11 +146,11 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
             parameters: parameters,
             encoding: JSONEncoding.default
         ).responseData { response in
-            handleResponse(response, params: parameters) { statusCode in
+            handleResponse(response, authorizationFlag: self.$isAuthorized, params: parameters) { statusCode in
                 statusCodeHandle(statusCode)
 
                 if (statusCode == 200){
-                    self.isAthorized = true
+                    self.isAuthorized = true
                 }
             } resultHandle: { data in
                 let result = try? JSONDecoder().decode(Token.self, from: data)

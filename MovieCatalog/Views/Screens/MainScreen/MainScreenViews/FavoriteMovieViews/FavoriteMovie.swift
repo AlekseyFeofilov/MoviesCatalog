@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FavoriteMovie: View {
     var url: String
+    var deletAction: () -> Void
     
     var body: some View {
         ZStack {
@@ -18,7 +19,7 @@ struct FavoriteMovie: View {
                 Spacer()
                 
                 VStack {
-                    RemoveButton()
+                    RemoveButton(action: deletAction)
                         .padding(xSmallSPadding)
                     
                     Spacer()
