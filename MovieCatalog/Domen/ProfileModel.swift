@@ -8,21 +8,21 @@
 import Foundation
 
 struct ProfileModel: Decodable{
-    var id: String
-    var nickName: String?
-    var email: String
-    var avatarLink: String?
-    var name: String
-    var gender: Int?
-    var birthDate: String
+    let id: String
+    let nickName: String?
+    let email: String
+    let avatarLink: String?
+    let name: String
+    let gender: Int?
+    let birthDate: String
     
     func toDictionary() -> [String:Any]{
-        return ["nickName" : nickName ?? "",
-                "name" : name,
-                "id" : id,
-                "avatarLink" : avatarLink ?? "",
-                "email" : email,
-                "birthDate" : birthDate,
-                "gender" : gender ?? 0]
+        return [nickNameKey : nickName ?? "",
+                nameKey : name,
+                idKey : id,
+                avatarLinkKey : avatarLink ?? "",
+                emailKey : email,
+                birthDateKey : birthDate,
+                genderKey : gender ?? 0]
     }
 }

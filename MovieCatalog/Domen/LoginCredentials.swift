@@ -8,11 +8,11 @@
 import Foundation
 
 struct LoginCredentials{
-    var login: String
-    var password: String
+    let login: String
+    let password: String
     
-    var dictionary: [String: Any] {
-        return ["username" : login,
-                "password" : password]
+    func toDictionary() -> [String: Any] {
+        return [usernameKey : login,
+                passwordKey : password]
     }
 }
