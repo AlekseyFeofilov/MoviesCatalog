@@ -17,7 +17,7 @@ struct ProfileScreen: View {
             
             VStack{
                 HStack(spacing: 16){
-                    CustomAsyncImage(imageStringUrl: viewModel.imageUrl, failureImage: Image(profileImageName))
+                    CustomAsyncImage(url: viewModel.imageUrl, failureImage: Image(profileImageName))
                         .frame(width: 88, height: 88, alignment: .center)
                         .clipShape(Circle())
                     

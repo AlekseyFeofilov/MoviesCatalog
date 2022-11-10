@@ -7,6 +7,19 @@
 
 import Foundation
 
-let scrollViewCoordinateSpaceName = "scrollView"
+let favoriteStackScrollView = "favoriteStackScrollView"
+let galeryStackScrollView = "galeryStackScrollView"
 let tokenKey = "Token"
+
+let usernameKey = "username"
+let userNameKey = "userName"
+let passwordKey = "password"
+let nameKey = "name"
+let emailKey = "email"
+let birthDateKey = "birthDate"
+let genderKey = "gender"
+let nickNameKey = "nickName"
+let idKey = "id"
+let avatarLinkKey = "avatarLink"
+
 

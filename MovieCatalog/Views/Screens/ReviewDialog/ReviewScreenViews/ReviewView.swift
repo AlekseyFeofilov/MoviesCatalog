@@ -32,7 +32,7 @@ struct ReviewView: View {
             
             VStack{
                 HStack{
-                    CustomAsyncImage(imageStringUrl: avatar, failureImage: Image("ProfileImage"))
+                    CustomAsyncImage(url: avatar, failureImage: Image("ProfileImage"))
                         .frame(width: 40, height: 40, alignment: .center)
                         .clipShape(Circle())
                     

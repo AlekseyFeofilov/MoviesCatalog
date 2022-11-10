@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct Ratting: View {
-    var ratting: Float
+    var ratting: Float?
     
-    init(_ ratting: Float){
+    init(_ ratting: Float?){
         self.ratting = ratting
     }
     
     var body: some View {
-        Text(String(ratting))
+        Text(ratting != nil ? String(format: "%.1f", ratting!) : "-")
             .frame(width: rattingWidth, height: rattingHeight)
             .foregroundColor(.white)
             .background(
                 RoundedRectangle(cornerRadius: xLargeCornerRadius)
                     .fill(Color(
-                        hue: Double(greenHue * ratting) / (fullCircleDegree * rattingMaxValue),
+                        hue: Double(greenHue * (ratting ?? 0)) / (fullCircleDegree * rattingMaxValue),
                         saturation: 1,
-                        brightness: 1)
+                        brightness: 0.7)
                     )
             )
     }

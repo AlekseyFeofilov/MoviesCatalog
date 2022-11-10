@@ -7,18 +7,40 @@
 
 import Foundation
 import Alamofire
+import SwiftUI
 
-func handleResponse (_ response: AFDataResponse<Data>, params: [String : Any] = [String : String](), statusCodeHandle: (Int) -> Void = { _ in }, resultHandle: (Data) -> Void = {_ in }){
+func handleResponse (
+    _ response: AFDataResponse<Data>,
+    authorizationFlag: Binding<Bool>,
+    params: [String : Any] = [String : String](),
+    statusCodeHandle: (Int) -> Void = { _ in },
+    resultHandle: (Data) -> Void = {_ in }
+){
     if let request = response.request {
-        print("Request:", request)
-        print("\nParams: ", params)
+        print("\nRequest:", request)
+        print("Params: ", params)
     }
     if let statusCode = response.response?.statusCode {
+        if statusCode == unauthorizedCode {
+            deleteToken()
+            authorizationFlag.wrappedValue = false
+        }
+        
         print("Status Code:", statusCode)
         statusCodeHandle(statusCode)
     }
+    
     switch response.result {
     case .success(let data):
+        do {
+            if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]{
+                print (json)
+            }
+        }
+        catch let error {
+            print("Failed to serialize: \(error.localizedDescription)")
+        }
+        
         resultHandle(data)
     case .failure(let error):
         print(error.localizedDescription)

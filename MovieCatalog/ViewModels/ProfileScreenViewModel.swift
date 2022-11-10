@@ -56,16 +56,6 @@ class ProfileScreenViewModel: ObservableObject {
         guard let token = getToken() else { return }
         var headers: HTTPHeaders = [:]
         headers["Authorization"] = "Bearer " + token
-        
-//        var params = [
-//            "nickName" : nickName ?? "",
-//            "name" : name,
-//            "id" : id,
-//            "avatarLink" : imageUrl ?? "",
-//            "email" : email,
-//            "birthDate" : formatDate(birthday) ?? Date.now,
-//            "gender" : gender?.rawValue ?? 0
-//        ]
         let params = ProfileModel(id: id, nickName: nickName, email: email, avatarLink: imageUrl, name: name, gender: gender?.rawValue, birthDate: formatDate(birthday)!).toDictionary() as Parameters
         
         AF.request(
@@ -75,8 +65,8 @@ class ProfileScreenViewModel: ObservableObject {
             encoding: JSONEncoding.default,
             headers: headers
         ).responseData { [self] response in
-            handleResponse(response, params: params, statusCodeHandle:  { statusCode in
-                if statusCode == 400 {
+            handleResponse(response, authorizationFlag: self.$isAuthorized, params: params, statusCodeHandle:  { statusCode in
+                if statusCode == badRequestCode {
                     profileChangingError = .usedEmail
                 }
             })
@@ -93,7 +83,7 @@ class ProfileScreenViewModel: ObservableObject {
             method: .post,
             headers: headers
         ).responseData { [self] response in
-            handleResponse(response, resultHandle:  { _ in
+            handleResponse(response, authorizationFlag: self.$isAuthorized, resultHandle:  { _ in
                 deleteToken()
                 isAuthorized = false
             })
@@ -122,7 +112,7 @@ class ProfileScreenViewModel: ObservableObject {
             method: .get,
             headers: headers
         ).responseData { response in
-            handleResponse(response, statusCodeHandle: { _ in }) { data in
+            handleResponse(response, authorizationFlag: self.$isAuthorized, statusCodeHandle: { _ in }) { data in
                 let result = try? JSONDecoder().decode(ProfileModel.self, from: data)
                 guard let result = result else { return }
                 

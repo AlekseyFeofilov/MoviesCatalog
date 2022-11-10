@@ -25,5 +25,5 @@ func strengthPasswordValidate(password: String) ->Bool{
 }
 
 func birthdayValidation(birthday: Date) -> Bool{
-    return birthday < Calendar.current.date(byAdding: DateComponents(year: -6), to: Date.now) ?? Date.now
+    return birthday < Calendar.current.date(byAdding: DateComponents(year: ageLimit), to: Date.now) ?? Date.now
 }

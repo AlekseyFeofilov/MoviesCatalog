@@ -18,6 +18,6 @@ func formatDate(_ date: String?) -> Date?{
 
 private func getFormatter() -> DateFormatter{
     let formatter = DateFormatter()
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    formatter.dateFormat = systemDateFormat
     return formatter
 }

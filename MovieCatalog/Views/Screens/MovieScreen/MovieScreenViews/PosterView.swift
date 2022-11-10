@@ -13,7 +13,7 @@ struct PosterView: View {
     @Binding var offset: CGFloat
     
     var body: some View {
-        CustomAsyncImage(imageStringUrl: imageStringUrl, failureImage:  Image("ProfileImage"))
+        CustomAsyncImage(url: imageStringUrl, failureImage:  Image("ProfileImage"))
         .aspectRatio(contentMode: .fill)
         .frame(height: animationState(min: 100, minValue: 100, max: height, maxValue: height, current: offset))
         .clipped() // todo: clipShape (halfRoundedRectangle)

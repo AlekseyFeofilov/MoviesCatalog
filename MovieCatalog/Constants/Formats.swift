@@ -8,3 +8,4 @@
 import Foundation
 
 let russianDateFormat = "dd.MM.YYYY"
+let systemDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
