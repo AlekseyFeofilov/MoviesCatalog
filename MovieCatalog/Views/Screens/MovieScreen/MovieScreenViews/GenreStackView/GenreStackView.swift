@@ -9,19 +9,19 @@ import SwiftUI
 import WrappingStack
 
 struct GenreStackView: View {
-    var genres: [String]
+    var viewModel: GenreSrackViewModel
     
     var body: some View {
         VStack {
             Text("Жанры")
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .font(Font.custom("IBMPlexSans-Medium", size: 16))
+                .font(Font.custom(IBMPlexSansRegularName, size: 16))
                 .foregroundColor(.white)
             .padding(.bottom)
             
             WrappingHStack(id: \.self, alignment: .leading, horizontalSpacing: 8, verticalSpacing: 8) {
-                ForEach(genres, id: \.self){ genre in
-                    GenreView(text: genre)
+                ForEach(viewModel.genres, id: \.self){ genre in
+                    GenreView(text: genre.name ?? "")
                 }
             }
         }
@@ -30,6 +30,6 @@ struct GenreStackView: View {
 
 struct GenreStackView_Previews: PreviewProvider {
     static var previews: some View {
-        GenreStackView(genres: ["Драма", "Комедия", "Детектив", "Телепузик", "Остиохандрос"])
+        GenreStackView(viewModel: GenreSrackViewModel([GenreModel(id: "1", name: "Классика"), GenreModel(id: "2", name: "Жанр с очень длинным названием, что аж пипец"), GenreModel(id: "3", name: "Рок")]))
     }
 }

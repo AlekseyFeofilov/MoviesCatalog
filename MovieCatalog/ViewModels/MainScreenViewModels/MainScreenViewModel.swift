@@ -14,23 +14,25 @@ class MainScreenViewModel: ObservableObject{
     @Published var favoriteMovies: [MovieElementModel]? = nil
     @Published var promotedMovie: MovieElementModel? = nil
     @Published private var _currentGaleryMovie: Int = 0
+    var asyncToggle = true
     
     var currentGaleryMovie: Binding<Int> { Binding {
         return self._currentGaleryMovie
     } set: { value in
         self._currentGaleryMovie = value
         self.addMovies()
-    }
-}
+    }}
     
     var currentPage = 0
     var currentMovieCount = 0
     var pageCount = 1
     
     @Binding var isAuthorized: Bool
+    @Binding var currentMovieId: String?
     
-    init(isAuthorized: Binding<Bool>){
+    init(isAuthorized: Binding<Bool>, currentMovieId: Binding<String?>){
         self._isAuthorized = isAuthorized
+        self._currentMovieId = currentMovieId
         
         addMovies()
         getFavoriteMovies()
@@ -41,32 +43,22 @@ class MainScreenViewModel: ObservableObject{
     }
     
     private func getFavoriteMovies(){
-        guard let token = getToken() else { return }
-        var headers: HTTPHeaders = [:]
-        headers["Authorization"] = "Bearer " + token
-        
-        AF.request(
-            demoBaseURL + getFavoritesRequestURL,
-            method: .get,
-            encoding: JSONEncoding.default,
-            headers: headers
-        ).responseData { response in
-            handleResponse(response, authorizationFlag: self.$isAuthorized, resultHandle: { data in
-                let result = try? JSONDecoder().decode(MovieListModel.self, from: data)
-                guard let result = result?.movies else { return }
-                self.favoriteMovies = result
-            })
+        MovieCatalog.getFavoriteMovies(authorizationFlag: self.$isAuthorized) { result in
+            self.favoriteMovies = result
         }
+    
     }
     
-    private func addMovies(){
+    private func addMovies() {
+        guard asyncToggle else { return }
         guard currentPage != pageCount else { return }
         guard _currentGaleryMovie == currentMovieCount else { return }
         guard let token = getToken() else { return }
-        print("Next page taken")
+        
+        asyncToggle = false
         var headers: HTTPHeaders = [:]
         headers["Authorization"] = "Bearer " + token
-
+        
         AF.request(
             String(format: demoBaseURL + getMoviesRequestURL, arguments: [currentPage + 1]),
             method: .get,
@@ -86,8 +78,10 @@ class MainScreenViewModel: ObservableObject{
                     self.currentMovieCount -= 1
                 }
                 else {
-                    self.movies! += result.movies?.suffix(result.movies!.count - 1) ?? []
+                    self.movies! += result.movies ?? []
                 }
+                
+                self.asyncToggle = true
             })
         }
     }

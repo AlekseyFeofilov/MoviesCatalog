@@ -12,7 +12,7 @@ struct GeneralScreen: View {
     
     var body: some View {
         if viewModel.isAuthorized {
-            NavigationView(viewModel: NavigationViewModelView(isAuthorized: $viewModel.isAuthorized))
+            NavView(viewModel: NavigationViewModel(isAuthorized: $viewModel.isAuthorized))
         }
         else {
             AuthorizationScreen(viewModel: AuthorizationScreenViewModel(isAthorized: $viewModel.isAuthorized))

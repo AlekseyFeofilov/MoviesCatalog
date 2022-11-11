@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct movieCharacteristicView: View {
+struct MovieCharacteristicView: View {
     var characteristicName: String
     var characteristicValue: String
     
     var body: some View {
-        HStack{
+        HStack(alignment: .top){
             Text(characteristicName)
                 .frame(width: 100, alignment: .leading)
                 .foregroundColor(.gray)
@@ -25,10 +25,12 @@ struct movieCharacteristicView: View {
     }
 }
 
-struct movieCharacteristicView_Previews: PreviewProvider {
+struct MovieCharacteristicView_Previews: PreviewProvider {
     static var previews: some View {
-        movieCharacteristicView(characteristicName: "name", characteristicValue: "value")
-        movieCharacteristicView(characteristicName: "name", characteristicValue: "reauly long valueeeee ohhhhhhhhhhh")
-        movieCharacteristicView(characteristicName: "and very long naaaaaaaa aaaaaaame", characteristicValue: "reauly long valueeeee ohhh hhh hhhhh")
+        VStack{
+            MovieCharacteristicView(characteristicName: "name", characteristicValue: "value")
+            MovieCharacteristicView(characteristicName: "name", characteristicValue: "reauly long valueeeee ohhhhhhhhhhh")
+            MovieCharacteristicView(characteristicName: "and very long naaaaaaaa aaaaaaame", characteristicValue: "reauly long valueeeee ohhh hhh hhhhh")
+        }
     }
 }

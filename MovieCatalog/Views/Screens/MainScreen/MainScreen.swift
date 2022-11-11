@@ -13,19 +13,19 @@ struct MainScreen: View {
     var body: some View {
         ZStack{
             Color("BackgroundColor")
-                .ignoresSafeArea()
             
             
             VStack{
                 if viewModel.promotedMovie?.poster != nil {
-                    PromotedMovie(url: viewModel.promotedMovie!.poster!)
+                    PromotedMovie(url: viewModel.promotedMovie!.poster!, id: viewModel.promotedMovie!.id, currentMovieId: viewModel.$currentMovieId)
+                        .ignoresSafeArea()
                 }
                 
                 if viewModel.favoriteMovies != nil {
                     if  viewModel.favoriteMovies!.count != 0 {
                         TitleTextView("Избранное")
                             .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0))
-                        FavoriteStack(viewModel: FavoriteStackViewModel(viewModel.favoriteMovies!, isAuthorized: viewModel.$isAuthorized))
+                        FavoriteStack(viewModel: FavoriteStackViewModel(viewModel.favoriteMovies!, isAuthorized: viewModel.$isAuthorized, currentMovieId: $viewModel.currentMovieId))
                     }
                 }
                 
@@ -51,6 +51,9 @@ struct MainScreen: View {
                                         }
                                         
                                         GalleryMovie(viewModel: GaleryMovieViewModel(movie))
+                                            .onTapGesture {
+                                                viewModel.currentMovieId = movie.id
+                                            }
                                     }
                                 }
                             }
@@ -60,11 +63,12 @@ struct MainScreen: View {
                     }
                 }
                 else {
-                    Text("Здесь пока ничего нет")
-                        .foregroundColor(.accentColor)
+                    ProgressView()
                 }
             }
         }
+        
+        .ignoresSafeArea(edges: .top)
     }
     
     private func isViewFirst(innerRect:CGRect, isIn outerProxy:GeometryProxy) -> Bool {
@@ -82,6 +86,6 @@ struct MainScreen: View {
 
 struct MainScreen_Previews: PreviewProvider {
     static var previews: some View {
-        MainScreen(viewModel: MainScreenViewModel(isAuthorized: .constant(true)))
+        MainScreen(viewModel: MainScreenViewModel(isAuthorized: .constant(true), currentMovieId: .constant("")))
     }
 }

@@ -12,8 +12,10 @@ class FavoriteStackViewModel: ObservableObject{
     @Published var movies: [MovieElementModel]
     @Published var firstVisibleMovie: String = "-1"
     @Binding var isAuthorized: Bool
+    @Binding var currentMovieId: String?
     
-    init(_ movies: [MovieElementModel], isAuthorized: Binding<Bool>){
+    init(_ movies: [MovieElementModel], isAuthorized: Binding<Bool>, currentMovieId: Binding<String?>){
+        self._currentMovieId = currentMovieId
         self.movies = movies
         self._isAuthorized = isAuthorized
     }

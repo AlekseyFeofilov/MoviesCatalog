@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct EditButtonView: View {
+    var action: () -> Void
+    
     var body: some View {
+        Button(action: action, label: {
         Image("EditIcon")
             .resizable()
             .padding(6)
@@ -17,11 +20,12 @@ struct EditButtonView: View {
                 Circle()
                     .fill(.gray)
             )
+        })
     }
 }
 
 struct EditButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        EditButtonView()
+        EditButtonView(action: {})
     }
 }

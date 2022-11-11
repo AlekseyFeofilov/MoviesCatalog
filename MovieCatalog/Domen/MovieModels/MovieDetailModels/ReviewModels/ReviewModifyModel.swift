@@ -8,7 +8,13 @@
 import Foundation
  
 struct ReviewModifyModel: Decodable{
-    let reviewText: String
-    let rating: Int
-    let isAnonymous: Bool
+    var reviewText: String
+    var rating: Int
+    var isAnonymous: Bool
+    
+    func toDictionary() -> [String:Any]{
+        return ["reviewText" : reviewText,
+                "rating" : rating,
+                "isAnonymous": isAnonymous]
+    }
 }
