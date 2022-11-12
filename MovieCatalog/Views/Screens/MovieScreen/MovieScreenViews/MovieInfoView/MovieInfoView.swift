@@ -14,7 +14,7 @@ struct MovieInfoView: View {
         VStack{
             Text(viewModel.movieInfo.description ?? "")
                 .foregroundColor(.white)
-                .font(Font.custom(IBMPlexSansRegularName, size: 14))
+                .font(Font.custom(Fonts.IBMPlexSansRegular, size: 14))
                 .fixedSize(horizontal: false, vertical: true)
                 
             AboutMovieView(viewModel: viewModel)

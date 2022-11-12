@@ -8,19 +8,19 @@
 import Foundation
 
 struct UserRegisterModel {
-    let login: String
+    let userName: String
     let password: String
     let email: String
     let name: String
-    let sex: Gender?
-    let selectedDate: Date?
-    
-    func toDictionary() -> [String:Any] {
-        return [userNameKey : login,
-            passwordKey : password,
-            nameKey : name,
-            emailKey : email,
-            birthDateKey : formatDate(selectedDate ?? Date.now)!,
-            genderKey : sex?.rawValue ?? 0]
+    let gender: Gender?
+    let birthDate: Date?
+
+    func toDictionary() -> [String: Any] {
+        [Keys.userName: userName,
+         Keys.password: password,
+         Keys.name: name,
+         Keys.email: email,
+         Keys.birthDate: birthDate?.formatDate() ?? Date.now.formatDate()!,
+         Keys.gender: gender?.rawValue ?? 0]
     }
 }

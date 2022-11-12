@@ -22,13 +22,8 @@ class ToolbarViewModel: ObservableObject{
         self._currentMoveId = currentMoveId
         self._authorizationFlag = authorizationFlag
         
-        if let data = UserDefaults.standard.data(forKey: "favoriteMovies"){
-            
-            if let decoded = String(data: data, encoding: .utf8){
-                let strings = decoded.split(separator: ",")
-                self.isFavorite = strings.contains(where: { it in it == currentMoveId.wrappedValue ?? ""})
-            }
-        }
+        let favorites = FavoriteRepository().getFavorites()
+        self.isFavorite = favorites.contains(where: { it in it == currentMoveId.wrappedValue ?? ""})
     }
     
     func refavorite(){

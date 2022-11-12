@@ -12,12 +12,12 @@ struct ProfileScreen: View {
     
     var body: some View {
         ZStack{
-            Color(backgroundColorName)
+            Color(Assets.backgroundColor)
                 .ignoresSafeArea()
             
             VStack{
                 HStack(spacing: 16){
-                    CustomAsyncImage(url: viewModel.imageUrl, failureImage: Image(profileImageName))
+                    CustomAsyncImage(url: viewModel.imageUrl, failureImage: Image(Assets.profileImage))
                         .frame(width: 88, height: 88, alignment: .center)
                         .clipShape(Circle())
                     
@@ -45,7 +45,7 @@ struct ProfileScreen: View {
                     Text("Пол")
                     SexButtonView($viewModel.gender)
                 }
-                .foregroundColor(Color(grayColorName))
+                .foregroundColor(Color(Assets.grayColor))
                 
                 Spacer()
                 

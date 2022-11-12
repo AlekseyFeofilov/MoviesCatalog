@@ -40,9 +40,9 @@ struct ReviewStackView: View {
 struct ReviewStackView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Color(backgroundColorName)
+            Color(Assets.backgroundColor)
             
-            ReviewStackView(viewModel: ReviewStackViewModel([ReviewModel(id: "1", rating: 1, reviewText: nil, isAnonymous: true, createDateTime: formatDate(Date.now)!, author: UserShortModel(userId: "1", nickName: nil, avatar: nil)), ReviewModel(id: "2", rating: 1, reviewText: nil, isAnonymous: true, createDateTime: formatDate(Date.now)!, author: UserShortModel(userId: "2", nickName: nil, avatar: nil)), ReviewModel(id: "3", rating: 1, reviewText: nil, isAnonymous: true, createDateTime: formatDate(Date.now)!, author: UserShortModel(userId: "3", nickName: nil, avatar: nil))], authorizationFlag: .constant(false), movieScreenViewModel: MovieScreenViewModel(currentMovieId: .constant(nil), authorizationFlag: .constant(false))), isReviewActive: .constant(false), movieId: "")
+            ReviewStackView(viewModel: ReviewStackViewModel([ReviewModel(id: "1", rating: 1, reviewText: nil, isAnonymous: true, createDateTime: Date.now.formatDate()!, author: UserShortModel(userId: "1", nickName: nil, avatar: nil)), ReviewModel(id: "2", rating: 1, reviewText: nil, isAnonymous: true, createDateTime: Date.now.formatDate()!, author: UserShortModel(userId: "2", nickName: nil, avatar: nil)), ReviewModel(id: "3", rating: 1, reviewText: nil, isAnonymous: true, createDateTime: Date.now.formatDate()!, author: UserShortModel(userId: "3", nickName: nil, avatar: nil))], authorizationFlag: .constant(false), movieScreenViewModel: MovieScreenViewModel(currentMovieId: .constant(nil), authorizationFlag: .constant(false))), isReviewActive: .constant(false), movieId: "")
         }
     }
 }

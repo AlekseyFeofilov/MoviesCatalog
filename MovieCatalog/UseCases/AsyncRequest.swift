@@ -37,7 +37,7 @@ func customAsyncRequest(
             }
             if let statusCode = response.response?.statusCode {
                 if statusCode == unauthorizedCode {
-                    deleteToken()
+                    UserRepository().deleteUser()
                     authorizationFlag.wrappedValue = false
                 }
                 

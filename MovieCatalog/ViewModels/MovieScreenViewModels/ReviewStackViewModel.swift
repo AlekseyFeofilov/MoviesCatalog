@@ -21,7 +21,7 @@ class ReviewStackViewModel: ObservableObject{
         self.authorizationFlag = authorizationFlag
         self.reviews = reviews
         
-        self.ownId = getUserId()
+        self.ownId = UserIdRepository().getUserId()
         let ownReviewIndex = reviews.firstIndex(where: { it in it.author.userId == self.ownId})
         
         if ownReviewIndex != nil {

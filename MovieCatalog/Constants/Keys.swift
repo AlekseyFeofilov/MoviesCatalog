@@ -7,19 +7,27 @@
 
 import Foundation
 
-let favoriteStackScrollView = "favoriteStackScrollView"
-let galeryStackScrollView = "galeryStackScrollView"
-let tokenKey = "Token"
+enum Keys {
+    static let favoriteStackScrollView = "favoriteStackScrollView"
+    static let galleryStackScrollView = "galleryStackScrollView"
+    static let tokenKey = "token"
+    static let favoriteMovies = "favoriteMovies"
 
-let usernameKey = "username"
-let userNameKey = "userName"
-let passwordKey = "password"
-let nameKey = "name"
-let emailKey = "email"
-let birthDateKey = "birthDate"
-let genderKey = "gender"
-let nickNameKey = "nickName"
-let idKey = "id"
-let avatarLinkKey = "avatarLink"
+    static let username = "username"
+    static let userName = "userName"
+    static let password = "password"
+    static let name = "name"
+    static let email = "email"
+    static let birthDate = "birthDate"
+    static let gender = "gender"
+    static let nickName = "nickName"
+    static let id = "id"
+    static let avatarLink = "avatarLink"
+    static let rating = "rating"
+    static let reviewText = "reviewText"
+    static let isAnonymous = "isAnonymous"
+    static let createDateTime = "createDateTime"
+    static let author = "author"
+}
 
 

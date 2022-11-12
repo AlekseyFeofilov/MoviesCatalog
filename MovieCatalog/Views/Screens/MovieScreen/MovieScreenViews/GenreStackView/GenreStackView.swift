@@ -15,7 +15,7 @@ struct GenreStackView: View {
         VStack {
             Text("Жанры")
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .font(Font.custom(IBMPlexSansRegularName, size: 16))
+                .font(Font.custom(Fonts.IBMPlexSansRegular, size: 16))
                 .foregroundColor(.white)
             .padding(.bottom)
             

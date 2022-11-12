@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProfileModel: Decodable{
+struct ProfileModel: Decodable {
     let id: String
     let nickName: String?
     let email: String
@@ -15,14 +15,14 @@ struct ProfileModel: Decodable{
     let name: String
     let gender: Int?
     let birthDate: String
-    
-    func toDictionary() -> [String:Any]{
-        return [nickNameKey : nickName ?? "",
-                nameKey : name,
-                idKey : id,
-                avatarLinkKey : avatarLink ?? "",
-                emailKey : email,
-                birthDateKey : birthDate,
-                genderKey : gender ?? 0]
+
+    func toDictionary() -> [String: Any] {
+        [Keys.nickName: nickName ?? "",
+         Keys.name: name,
+         Keys.id: id,
+         Keys.avatarLink: avatarLink ?? "",
+         Keys.email: email,
+         Keys.birthDate: birthDate,
+         Keys.gender: gender ?? 0]
     }
 }

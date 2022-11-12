@@ -23,7 +23,7 @@ struct ReviewView: View {
                             .font(Font.custom("IBMPlexSans-Medium", size: 16))
                         if(viewModel.isMine){
                             Text("мой отзыв")
-                                .font(Font.custom(IBMPlexSansRegularName, size: 12))
+                                .font(Font.custom(Fonts.IBMPlexSansRegular, size: 12))
                                 .foregroundColor(.gray)
                         }
                     }
@@ -35,14 +35,14 @@ struct ReviewView: View {
                 
                 Text(viewModel.review.reviewText ?? "")
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(Font.custom(IBMPlexSansRegularName, size: 14))
+                    .font(Font.custom(Fonts.IBMPlexSansRegular, size: 14))
                 
                 Spacer()
                     .frame(height: 4)
                 
                 HStack{
-                    Text(viewModel.review.createDateTime)
-                        .font(Font.custom(IBMPlexSansRegularName, size: 12))
+                    Text(viewModel.review.createDateTime.toHumanReadableFormat()!)
+                        .font(Font.custom(Fonts.IBMPlexSansRegular, size: 12))
                         .foregroundColor(.gray)
                     Spacer()
                     
@@ -66,9 +66,9 @@ struct ReviewView: View {
 struct ReviewView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Color(tabBarColorName)
+            Color(Assets.tabBarColor)
             
-            ReviewView(viewModel: ReviewViewModel(ReviewModel(id: "1", rating: 4, reviewText: nil, isAnonymous: true, createDateTime: formatDate(Date.now)!, author: UserShortModel(userId: "1", nickName: nil, avatar: nil)), movieId: "", ownId: nil, authorizationFlag: .constant(false), isReviewActive: .constant(false), movieScreenViewModel: MovieScreenViewModel(currentMovieId: .constant(nil), authorizationFlag: .constant(false))))
+            ReviewView(viewModel: ReviewViewModel(ReviewModel(id: "1", rating: 4, reviewText: nil, isAnonymous: true, createDateTime: Date.now.formatDate()!, author: UserShortModel(userId: "1", nickName: nil, avatar: nil)), movieId: "", ownId: nil, authorizationFlag: .constant(false), isReviewActive: .constant(false), movieScreenViewModel: MovieScreenViewModel(currentMovieId: .constant(nil), authorizationFlag: .constant(false))))
         }
     }
 }

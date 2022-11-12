@@ -13,7 +13,7 @@ struct CustomSecureField: View {
     
     var body: some View {
         SecureField(
-            emptyString,
+            "",
             text: $text
         )
         .textFieldStyle(CustomTextFieldStyle())
@@ -27,7 +27,7 @@ struct CustomSecureField: View {
 }
 
 struct CustomSecureField_Previews: PreviewProvider {
-    @State static var text: String = emptyString
+    @State static var text: String = ""
     
     static var previews: some View {
         CustomSecureField(text: $text)

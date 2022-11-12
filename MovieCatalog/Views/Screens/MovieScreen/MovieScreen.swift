@@ -12,17 +12,17 @@ struct MovieScreen: View {
     
     var body: some View {
         ZStack {
-            Color(backgroundColorName)
+            Color(Assets.backgroundColor)
                 .ignoresSafeArea()
             
-            ToolbarView(imageStringUrl: viewModel.movieDetails?.poster ?? "", startOffset: 250, title: viewModel.movieDetails?.name ?? "", viewModel: ToolbarViewModel(offset: viewModel.offset, currentMoveId: viewModel.currentMovieId, authorizationFlag: viewModel.authorizationFlag) /*offset: $viewModel.offset, currentMoveId: viewModel.currentMovieId*/)
+            ToolbarView(imageStringUrl: viewModel.movieDetails?.poster ?? "", startOffset: 300, title: viewModel.movieDetails?.name ?? "", viewModel: ToolbarViewModel(offset: viewModel.offset, currentMoveId: viewModel.currentMovieId, authorizationFlag: viewModel.authorizationFlag) /*offset: $viewModel.offset, currentMoveId: viewModel.currentMovieId*/)
                 .zIndex(1)
             
             if viewModel.movieDetails != nil {
                 GeometryReader{ outerProxy in
-                    ScrollView{
+                    ScrollView(showsIndicators: false){
                         Spacer()
-                            .frame(height: 250)
+                            .frame(height: 300)
                         ZStack {
                             GeometryReader{ geometry in
                                 Rectangle()
@@ -41,7 +41,6 @@ struct MovieScreen: View {
                                 }
                             }
                         }
-                        
                     }
                     .coordinateSpace(name: "MovieScreenView")
                     .padding(.horizontal)

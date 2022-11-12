@@ -12,11 +12,11 @@ struct AuthorizationScreen: View {
     
     var body: some View {
         ZStack {
-            Color(backgroundColorName)
+            Color(Assets.backgroundColor)
                 .ignoresSafeArea()
             
             VStack{
-                Image(logoImageName)
+                Image(Assets.logoImage)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: viewModel.haveAccount ? mediumLogoHeight : smallLogoHeight)

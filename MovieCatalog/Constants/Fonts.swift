@@ -7,4 +7,6 @@
 
 import Foundation
 
-let IBMPlexSansRegularName = "IBMPlexSans-Regular"
+enum Fonts {
+    static let IBMPlexSansRegular = "IBMPlexSans-Regular"
+}

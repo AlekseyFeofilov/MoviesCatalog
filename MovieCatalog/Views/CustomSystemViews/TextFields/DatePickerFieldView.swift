@@ -18,7 +18,7 @@ struct DatePickerFieldView: View {
         self.placeholder = placeholder
         self._text = text
         self._savedDate = savedDate
-        formatter.dateFormat = russianDateFormat
+        formatter.dateFormat = Formats.russianDateFormat
     }
     
     let formatter = DateFormatter()
@@ -26,7 +26,7 @@ struct DatePickerFieldView: View {
     private var formattedDate: Binding<String> { Binding (
         get: {
             if (savedDate == nil) {
-                return emptyString
+                return ""
             }
             else {
                 return formatter.string(from: savedDate!)
@@ -44,7 +44,7 @@ struct DatePickerFieldView: View {
             
             ZStack(alignment: .trailing) {
                 Text(fullStringText).foregroundColor(.black.opacity(0))
-                Image(calendarIconName)
+                Image(Assets.calendarIcon)
                     .padding(.trailing, smallPadding)
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -83,7 +83,7 @@ struct DatePickerFieldView_Previews: PreviewProvider {
     
     static var previews: some View {
         ZStack {
-            Color(backgroundColorName)
+            Color(Assets.backgroundColor)
             DatePickerFieldView(text: $text, savedDate: $date)
         }
         .ignoresSafeArea()

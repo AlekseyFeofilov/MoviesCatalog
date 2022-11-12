@@ -22,7 +22,7 @@ struct CustomButtonStyle: ButtonStyle {
             .overlay{
                 RoundedRectangle(cornerRadius: mediumCornerRadius)
                     .stroke(
-                        active ? .white : Color(grayColorName),
+                        active ? .white : Color(Assets.grayColor),
                         lineWidth: active ? 0 : smallFieldStrokeLineWidth)
             }
     }

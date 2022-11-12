@@ -46,43 +46,40 @@ class MainScreenViewModel: ObservableObject{
         MovieCatalog.getFavoriteMovies(authorizationFlag: self.$isAuthorized) { result in
             self.favoriteMovies = result
         }
-    
+        
     }
     
     private func addMovies() {
         guard asyncToggle else { return }
         guard currentPage != pageCount else { return }
         guard _currentGaleryMovie == currentMovieCount else { return }
-        guard let token = getToken() else { return }
         
         asyncToggle = false
-        var headers: HTTPHeaders = [:]
-        headers["Authorization"] = "Bearer " + token
         
-        AF.request(
+        CustomAFRequest(
             String(format: demoBaseURL + getMoviesRequestURL, arguments: [currentPage + 1]),
             method: .get,
-            encoding: JSONEncoding.default,
-            headers: headers
-        ).responseData { response in
-            handleResponse(response, authorizationFlag: self.$isAuthorized, resultHandle: { data in
-                let result = try? JSONDecoder().decode(MoviesPagedListModel.self, from: data)
-                guard let result = result else { return }
-                self.pageCount = result.pageInfo.pageCount
-                self.currentPage = result.pageInfo.currentPage
-                self.currentMovieCount += result.pageInfo.pageSize
-                
-                if self.currentPage == 1 {
-                    self.movies = result.movies?.suffix(result.movies!.count - 1) ?? []
-                    self.promotedMovie = result.movies?.first
-                    self.currentMovieCount -= 1
-                }
-                else {
-                    self.movies! += result.movies ?? []
-                }
-                
-                self.asyncToggle = true
-            })
-        }
+            authorizationFlag: self.$isAuthorized,
+            needAuthorization: true,
+            encoding: JSONEncoding.default) { response in
+                handleResponse(response, authorizationFlag: self.$isAuthorized, resultHandle: { data in
+                    let result = try? JSONDecoder().decode(MoviesPagedListModel.self, from: data)
+                    guard let result = result else { return }
+                    self.pageCount = result.pageInfo.pageCount
+                    self.currentPage = result.pageInfo.currentPage
+                    self.currentMovieCount += result.pageInfo.pageSize
+                    
+                    if self.currentPage == 1 {
+                        self.movies = result.movies?.suffix(result.movies!.count - 1) ?? []
+                        self.promotedMovie = result.movies?.first
+                        self.currentMovieCount -= 1
+                    }
+                    else {
+                        self.movies! += result.movies ?? []
+                    }
+                    
+                    self.asyncToggle = true
+                })
+            }
     }
 }

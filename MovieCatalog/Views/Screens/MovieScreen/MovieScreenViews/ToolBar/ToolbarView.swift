@@ -43,7 +43,7 @@ struct ToolbarView: View {
             
             VStack {
                 Spacer()
-                    .frame(height: animationState(min: 0, minValue: 100, max: startOffset - 100, maxValue: startOffset, current: viewModel.offset))
+                    .frame(height: animationState(min: 0, minValue: 100, max: startOffset - 150, maxValue: startOffset, current: viewModel.offset))
                 
                 HStack{
                     Spacer()
@@ -51,6 +51,7 @@ struct ToolbarView: View {
                     
                     Text(title)
                         .font(.system(size: animationState(min: 24, minValue: 100, max: 36, maxValue: startOffset, current: viewModel.offset)))
+                        .lineLimit(2)
                         .foregroundColor(.white)
                         .coordinateSpace(name: "NavBar")
                     

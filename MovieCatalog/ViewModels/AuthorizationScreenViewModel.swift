@@ -103,7 +103,7 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
         
         _authorize(
             url: url,
-            parameters: UserRegisterModel(login: login, password: password, email: email, name: name, sex: sex, selectedDate: birthdayDate).toDictionary()
+            parameters: UserRegisterModel(userName: login, password: password, email: email, name: name, gender: sex, birthDate: birthdayDate).toDictionary()
         ) { [self] statusCode in
             if statusCode == badRequestCode {
                 authorizationError = .takenName
@@ -118,7 +118,7 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
 
         _authorize(
             url: url,
-            parameters: LoginCredentials(login: login, password: password).toDictionary()
+            parameters: LoginCredentials(username: login, password: password).toDictionary()
         ) { [self] statusCode in
             if statusCode == unauthorizedCode {
                 authorizationError = .wrongLoginOrPassword
@@ -155,7 +155,7 @@ class AuthorizationScreenViewModel: ObservableObject, SignUpViewModel, SignInVie
             } resultHandle: { data in
                 let result = try? JSONDecoder().decode(Token.self, from: data)
                 guard let result = result else { return }
-                setToken(result.token)
+                UserRepository().setUser(token: result.token)
             }
         }
     }

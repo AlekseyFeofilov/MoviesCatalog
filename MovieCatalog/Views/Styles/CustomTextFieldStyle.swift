@@ -11,7 +11,7 @@ struct CustomTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<_Label>) -> some View {
         configuration
             .padding(.horizontal, largeCornerRadius)
-            .foregroundColor(Color(fakeAccentColorName))
+            .foregroundColor(Color(Assets.fakeAccentColor))
             .frame(height: fieldHeight)
             .overlay{
                 RoundedRectangle(cornerRadius: largeCornerRadius)

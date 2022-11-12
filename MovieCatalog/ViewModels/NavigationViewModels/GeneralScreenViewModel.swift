@@ -11,11 +11,7 @@ class GeneralScreenViewModel: ObservableObject{
     @Published var isAuthorized = false
     
     init(){
-        if let _ = getToken() {
-            isAuthorized = true
-        }
-        else {
-            isAuthorized = false
-        }
+        let token = TokenRepository().getToken()
+        isAuthorized = (token != nil)
     }
 }

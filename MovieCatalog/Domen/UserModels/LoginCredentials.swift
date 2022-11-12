@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct LoginCredentials{
-    let login: String
+struct LoginCredentials {
+    let username: String
     let password: String
     
     func toDictionary() -> [String: Any] {
-        return [usernameKey : login,
-                passwordKey : password]
+        [Keys.username: username,
+         Keys.password: password]
     }
 }

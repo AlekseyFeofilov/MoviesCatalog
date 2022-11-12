@@ -16,7 +16,7 @@ struct DividedButtonView: View {
     var body: some View {
         Button(action: action){
             Text (text)
-                .foregroundColor(activeFlag ? .white : Color(grayColorName))
+                .foregroundColor(activeFlag ? .white : Color(Assets.grayColor))
                 .frame(maxWidth: .infinity, maxHeight: fieldHeight)
         }
         .background(){

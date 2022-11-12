@@ -7,15 +7,27 @@
 
 import Foundation
 
-let profileImageName = "ProfileImage"
-let grayColorName = "GrayColor"
-let tabBarColorName = "TabBarColor"
-let backgroundColorName = "BackgroundColor"
-let logoImageName = "LogoImage"
-let calendarIconName = "CalendarIcon"
-let fakeAccentColorName = "FakeAccentColor"
-let datePickerTitle = "DatePiker"
-let navActiveMainImageName = "NavActiveMainImage"
-let navMainImageName = "NavMainImage"
-let navActiveProfileImageName = "NavActiveProfileImage"
-let navProfileImageName = "NavProfileImage"
+enum Assets {
+    //Color
+    static let grayColor = "GrayColor"
+    static let darkGrayColor = "DarkGrayColor"
+    static let lightGrayColor = "LightGrayColor"
+    static let fadedGrayColor = "FadedGrayColor"
+    static let tabBarColor = "TabBarColor"
+    static let backgroundColor = "BackgroundColor"
+    static let fakeAccentColor = "FakeAccentColor"
+    static let datePickerTitle = "DatePiker"
+
+    //Images & icons
+    static let calendarIcon = "CalendarIcon"
+    static let editIcon = "EditIcon"
+    static let lightXMarkIcon = "LightXMarkIcon"
+    static let XMarkIcon = "XMarkIcon"
+    static let arrowIcon = "ArrowIcon"
+    static let profileImage = "ProfileImage"
+    static let logoImage = "LogoImage"
+    static let navigationActiveMainImage = "NavActiveMainImage"
+    static let navigationMainImage = "NavMainImage"
+    static let navigationActiveProfileImage = "NavActiveProfileImage"
+    static let navigationProfileImage = "NavProfileImage"
+}

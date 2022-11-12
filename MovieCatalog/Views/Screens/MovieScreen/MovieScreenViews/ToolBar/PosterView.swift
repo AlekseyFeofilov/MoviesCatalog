@@ -16,12 +16,12 @@ struct PosterView: View {
         CustomAsyncImage(url: imageStringUrl, failureImage:  Image(systemName: "photo"))
             .foregroundColor(.white)
         .aspectRatio(contentMode: .fill)
-        .frame(height: animationState(min: 100, minValue: 100, max: height, maxValue: height, current: offset))
+        .frame(height: animationState(min: 110, minValue: 100, max: height, maxValue: height, current: offset))
         .clipped() // todo: clipShape (halfRoundedRectangle)
         .overlay(
             Rectangle()
                 .fill(Color("BackgroundColor"))
-                .opacity( animationState(min: 1, minValue: 100, max: 0, maxValue: height, current: offset))
+                .opacity( animationState(min: 1, minValue: 110, max: 0, maxValue: height, current: offset))
         )
     }
 }

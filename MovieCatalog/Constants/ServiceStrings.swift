@@ -8,5 +8,5 @@
 import Foundation
 
 let enterText = "Enter"
-let emptyString = ""
+let separator = ","
 let fullStringText = "........................................................................."

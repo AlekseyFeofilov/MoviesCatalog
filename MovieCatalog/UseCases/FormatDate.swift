@@ -7,17 +7,33 @@
 
 import Foundation
 
-func formatDate(_ date: Date?) -> String?{
-    guard let date = date else { return nil }
-    return getFormatter().string(from: date)
+extension Date {
+    func formatDate() -> String? {
+        getFormatter().string(from: self)
+    }
 }
 
-func formatDate(_ date: String?) -> Date?{
-    return getFormatter().date(from: date ?? "")
+extension String {
+    func formatDate() -> Date? {
+        getFormatter().date(from: self)
+    }
 }
 
-private func getFormatter() -> DateFormatter{
+extension String {
+    func toHumanReadableFormat() -> String?{
+        guard let date = self.formatDate() else { return nil }
+        return getHumanReadableFormatted().string(from: date) 
+    }
+}
+
+private func getFormatter() -> DateFormatter {
     let formatter = DateFormatter()
-    formatter.dateFormat = systemDateFormat
+    formatter.dateFormat = Formats.systemDateFormat
+    return formatter
+}
+
+private func getHumanReadableFormatted() -> DateFormatter {
+    let formatter = DateFormatter()
+    formatter.dateFormat = Formats.russianDateFormat
     return formatter
 }

@@ -12,7 +12,7 @@ struct DatePickerPopUpView: View {
     @State var selectedDate: Date = Date()
     
     var body: some View {
-        DatePicker(datePickerTitle, selection: $selectedDate, displayedComponents: [.date])
+        DatePicker(Assets.datePickerTitle, selection: $selectedDate, displayedComponents: [.date])
             .accentColor(Color.accentColor)
             .datePickerStyle(GraphicalDatePickerStyle())
             .onChange(of: selectedDate, perform: { _ in
@@ -20,7 +20,7 @@ struct DatePickerPopUpView: View {
             })
             .padding()
             .background(
-                Color(backgroundColorName)
+                Color(Assets.backgroundColor)
                     .cornerRadius(datePickerCornerRadius)
             )
     }

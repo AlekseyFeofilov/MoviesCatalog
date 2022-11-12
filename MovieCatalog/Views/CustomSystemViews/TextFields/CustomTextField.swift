@@ -13,7 +13,7 @@ struct CustomTextField: View {
     
     var body: some View {
         TextField(
-            emptyString,
+            "",
             text: $text
         )
         .textFieldStyle(CustomTextFieldStyle())

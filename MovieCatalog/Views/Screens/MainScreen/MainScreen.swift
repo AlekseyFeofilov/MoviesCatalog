@@ -40,7 +40,7 @@ struct MainScreen: View {
                                         GeometryReader { geometry in
                                             Rectangle()
                                                 .fill(Color.orange.opacity(0))
-                                                .onChange(of: geometry.frame(in: .named(favoriteStackScrollView))) { imageRect in
+                                                .onChange(of: geometry.frame(in: .named(Keys.favoriteStackScrollView))) { imageRect in
                                                     if isViewFirst(innerRect: imageRect, isIn: outerProxy) {
                                                         viewModel.currentGaleryMovie.wrappedValue = (viewModel.movies!.firstIndex(where: { it in
                                                             it.id == movie.id
@@ -58,7 +58,7 @@ struct MainScreen: View {
                                 }
                             }
                         }
-                        .coordinateSpace(name: galeryStackScrollView)
+                        .coordinateSpace(name: Keys.galleryStackScrollView)
                         .padding(.leading, 16)
                     }
                 }
@@ -75,7 +75,6 @@ struct MainScreen: View {
         let innerOrigin = innerRect.origin.y
         let imageHeight = innerRect.height
         let scrollOrigin = outerProxy.frame(in: .global).origin.y
-        let scrollHeight = outerProxy.size.height
         
         if innerOrigin > scrollOrigin && innerOrigin < scrollOrigin + imageHeight + smallPadding {
             return true

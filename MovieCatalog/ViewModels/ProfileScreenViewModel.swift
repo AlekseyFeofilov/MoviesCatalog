@@ -39,7 +39,7 @@ class ProfileScreenViewModel: ObservableObject {
     @Published var birthday: Date? = nil
     @Published var gender: Gender? = nil
     @Published var profileChangingError = ProfileChangingError.none
-    @Binding var isAuthorized: Bool
+    @Binding var authorizationFlag: Bool
     
     var nickName: String = ""
     var isButtonActive: Binding<Bool> { Binding (
@@ -53,19 +53,17 @@ class ProfileScreenViewModel: ObservableObject {
         guard emptyValidation() else { return }
         guard profileInfoValidate() else { return }
         
-        guard let token = getToken() else { return }
-        var headers: HTTPHeaders = [:]
-        headers["Authorization"] = "Bearer " + token
-        let params = ProfileModel(id: id, nickName: nickName, email: email, avatarLink: imageUrl, name: name, gender: gender?.rawValue, birthDate: formatDate(birthday)!).toDictionary() as Parameters
         
-        AF.request(
+        let params = ProfileModel(id: id, nickName: nickName, email: email, avatarLink: imageUrl, name: name, gender: gender?.rawValue, birthDate: birthday!.formatDate()!).toDictionary() as Parameters
+        
+        CustomAFRequest(
             demoBaseURL + editProfileInfoRequestURL,
             method: .put,
             parameters: params,
-            encoding: JSONEncoding.default,
-            headers: headers
-        ).responseData { [self] response in
-            handleResponse(response, authorizationFlag: self.$isAuthorized, params: params, statusCodeHandle:  { statusCode in
+            authorizationFlag: $authorizationFlag,
+            needAuthorization: true,
+            encoding: JSONEncoding.default) { [self] response in
+            handleResponse(response, authorizationFlag: $authorizationFlag, params: params, statusCodeHandle:  { statusCode in
                 if statusCode == badRequestCode {
                     profileChangingError = .usedEmail
                 }
@@ -74,18 +72,14 @@ class ProfileScreenViewModel: ObservableObject {
     }
     
     func logout(){
-        guard let token = getToken() else { return } //todo go to SignInScreen
-        var headers: HTTPHeaders = [:]
-        headers["Authorization"] = "Bearer " + token
-        
-        AF.request(
+        CustomAFRequest(
             demoBaseURL + logoutRequestURL,
             method: .post,
-            headers: headers
-        ).responseData { [self] response in
-            handleResponse(response, authorizationFlag: self.$isAuthorized, resultHandle:  { _ in
-                deleteToken()
-                isAuthorized = false
+            authorizationFlag: $authorizationFlag,
+            needAuthorization: true) { [self] response in
+            handleResponse(response, authorizationFlag: self.$authorizationFlag, resultHandle:  { _ in
+                UserRepository().deleteUser()
+                authorizationFlag = false
             })
         }
     }
@@ -101,18 +95,14 @@ class ProfileScreenViewModel: ObservableObject {
     }
     
     init(isAuthorized: Binding<Bool>){
-        self._isAuthorized = isAuthorized
+        self._authorizationFlag = isAuthorized
         
-        guard let token = getToken() else { return } //todo go to SignInScreen
-        var headers: HTTPHeaders = [:]
-        headers["Authorization"] = "Bearer " + token
-               
-        AF.request(
+        CustomAFRequest(
             demoBaseURL + getProfileInfoRequestURL,
             method: .get,
-            headers: headers
-        ).responseData { response in
-            handleResponse(response, authorizationFlag: self.$isAuthorized, statusCodeHandle: { _ in }) { data in
+            authorizationFlag: $authorizationFlag,
+            needAuthorization: true) { response in
+            handleResponse(response, authorizationFlag: self.$authorizationFlag, statusCodeHandle: { _ in }) { data in
                 let result = try? JSONDecoder().decode(ProfileModel.self, from: data)
                 guard let result = result else { return }
                 
@@ -121,7 +111,7 @@ class ProfileScreenViewModel: ObservableObject {
                 self.imageUrl = result.avatarLink ?? ""
                 self.name = result.name
                 self.email = result.email
-                self.birthday = formatDate(result.birthDate)!
+                self.birthday = result.birthDate.formatDate()!
                 self.gender = Gender.init(rawValue: result.gender!)
             }
         }

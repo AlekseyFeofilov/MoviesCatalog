@@ -6,15 +6,15 @@
 //
 
 import Foundation
- 
-struct ReviewModifyModel: Decodable{
+
+struct ReviewModifyModel: Decodable {
     var reviewText: String
     var rating: Int
     var isAnonymous: Bool
-    
-    func toDictionary() -> [String:Any]{
-        return ["reviewText" : reviewText,
-                "rating" : rating,
-                "isAnonymous": isAnonymous]
+
+    func toDictionary() -> [String: Any] {
+        [Keys.reviewText: reviewText,
+         Keys.rating: rating,
+         Keys.isAnonymous: isAnonymous]
     }
 }

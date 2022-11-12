@@ -21,7 +21,7 @@ struct FavoriteStack: View {
                             GeometryReader { geometry in
                                 Rectangle()
                                     .fill(Color.orange.opacity(0))
-                                    .onChange(of: geometry.frame(in: .named(favoriteStackScrollView))) { imageRect in
+                                    .onChange(of: geometry.frame(in: .named(Keys.favoriteStackScrollView))) { imageRect in
                                         if isViewFirst(innerRect: imageRect, isIn: outerProxy) {
                                             viewModel.firstVisibleMovie = movie.id
                                         }
@@ -39,7 +39,7 @@ struct FavoriteStack: View {
                     }
                 }
             }
-            .coordinateSpace(name: favoriteStackScrollView)
+            .coordinateSpace(name: Keys.favoriteStackScrollView)
         }
         .frame(maxHeight: firstFavoriteMovieHeight)
     }

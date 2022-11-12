@@ -11,18 +11,20 @@ import SwiftUI
 
 func handleResponse (
     _ response: AFDataResponse<Data>,
-    authorizationFlag: Binding<Bool>,
-    params: [String : Any] = [String : String](),
+    authorizationFlag: Binding<Bool> = .constant(true),
+    params: [String : Any] = [String : Any](),
     statusCodeHandle: (Int) -> Void = { _ in },
     resultHandle: (Data) -> Void = {_ in }
 ){
+    
+    
     if let request = response.request {
         print("\nRequest:", request)
         print("Params: ", params)
     }
     if let statusCode = response.response?.statusCode {
         if statusCode == unauthorizedCode {
-            deleteToken()
+            UserRepository().deleteUser()
             authorizationFlag.wrappedValue = false
         }
         

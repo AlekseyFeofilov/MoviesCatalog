@@ -37,7 +37,7 @@ class ReviewDialogViewModel: ObservableObject{
                 self.rating = ownReview!.rating
             }
             else {
-                self.ownReview = ReviewModel(id: "", rating: 0, reviewText: "", isAnonymous: false, createDateTime: formatDate(Date.now)!, author: UserShortModel(userId: profileModel.id, nickName: profileModel.nickName, avatar: profileModel.avatarLink))
+                self.ownReview = ReviewModel(id: "", rating: 0, reviewText: "", isAnonymous: false, createDateTime: Date.now.formatDate()!, author: UserShortModel(userId: profileModel.id, nickName: profileModel.nickName, avatar: profileModel.avatarLink))
             }
         }
     }
